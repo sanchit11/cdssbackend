@@ -17,7 +17,7 @@ app = FastAPI(title="MedAI Study Hub - Diagnosis Backend", version="1.0.0")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"], # In production, restrict this to your React app domain
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
