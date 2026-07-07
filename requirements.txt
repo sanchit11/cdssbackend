@@ -7,3 +7,5 @@ langchain-chroma
 chromadb
 python-dotenv
 langchain_ollama
+pypdf
+
