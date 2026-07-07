@@ -42,16 +42,17 @@ OLLAMA_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
 OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "gemma3:1b")
 
 DEEPSEEK_KEY = os.getenv("DEEPSEEK_API_KEY")
+GROQ_KEY = os.getenv("GROQ_API_KEY")
 
 # If a DeepSeek key exists (like on Render), use the cloud API.
 # Otherwise, fall back to local Ollama for your local machine testing.
-if DEEPSEEK_KEY:
+if GROQ_KEY:
     llm = ChatOpenAI(
-        model="deepseek-chat", 
-        openai_api_key=DEEPSEEK_KEY, 
-        openai_api_base="https://api.deepseek.com/v1",
+        model="llama-3.3-70b-versatile", # High quality reasoning model on Groq free tier
+        openai_api_key=GROQ_KEY,
+        openai_api_base="https://api.groq.com/openai/v1",
         temperature=0.1
-    )
+)
 else:
     OLLAMA_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
     OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "gemma3:1b")
