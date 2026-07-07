@@ -12,4 +12,5 @@ python-multipart
 typing
 langchain_core
 schemas
+langchain_openai
 

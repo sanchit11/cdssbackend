@@ -8,6 +8,7 @@ from pypdf import PdfReader
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from langchain_ollama import ChatOllama
+from langchain_openai import ChatOpenAI
 from langchain_core.messages import SystemMessage, HumanMessage
 from schemas import AIAnalysisResponse, LabReportAnalysisResponse, BloodReportAnalysisResponse, BloodBiomarkerRow
 
@@ -40,11 +41,25 @@ class PatientDiagnosisInput(BaseModel):
 OLLAMA_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
 OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "gemma3:1b")
 
-llm = ChatOllama(
-    model=OLLAMA_MODEL,
-    base_url=OLLAMA_URL,
-    temperature=0.1 # Low temperature ensures strict diagnostic compliance
-)
+DEEPSEEK_KEY = os.getenv("DEEPSEEK_API_KEY")
+
+# If a DeepSeek key exists (like on Render), use the cloud API.
+# Otherwise, fall back to local Ollama for your local machine testing.
+if DEEPSEEK_KEY:
+    llm = ChatOpenAI(
+        model="deepseek-chat", 
+        openai_api_key=DEEPSEEK_KEY, 
+        openai_api_base="https://api.deepseek.com/v1",
+        temperature=0.1
+    )
+else:
+    OLLAMA_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
+    OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "gemma3:1b")
+    llm = ChatOllama(
+        model=OLLAMA_MODEL,
+        base_url=OLLAMA_URL,
+        temperature=0.1
+    )
 
 @app.get("/")
 def health_check():
