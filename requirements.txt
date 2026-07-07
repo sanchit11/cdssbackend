@@ -8,4 +8,8 @@ chromadb
 python-dotenv
 langchain_ollama
 pypdf
+python-multipart
+typing
+langchain_core
+schemas
 
