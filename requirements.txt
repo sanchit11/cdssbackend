@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+langgraph
+pydantic
+langchain-openai
+langchain-chroma
+chromadb
+python-dotenv
+langchain_ollama
+langgraph_agent
